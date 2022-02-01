@@ -1,0 +1,12 @@
+name: "Main Pain"
+description: "A GitHub action to notify a Slack webhook that the main branch is in a failing state"
+inputs:
+  slack-webhook-url:
+    description: "The webhook url to which this action should send the web request"
+    required: true
+runs:
+  using: "composite"
+  steps:
+    - run: |
+        curl -X POST -H 'Content-type: application/json' --data '{ "blocks": [ { "type": "section", "text": { "type": "mrkdwn", "text": "🚨ALERT🚨\n\nThe main branch of *${{ github.repository }}* is failing.\n\nhttps://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}" }, "accessory": { "type": "image", "image_url": "https://media.giphy.com/media/gn5Zllp8hD2KY/giphy.gif", "alt_text": "house on fire" } } ] }' ${{ inputs.slack-webhook-url }}
+      shell: bash

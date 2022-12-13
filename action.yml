@@ -4,6 +4,9 @@ inputs:
   slack-webhook-url:
     description: "The webhook url to which this action should send the web request"
     required: true
+  message:
+    description: "The main notification message to be sent"
+    required: false
   details:
     description: "A string of additional details to be shown below the main notification"
     required: false
@@ -14,5 +17,5 @@ runs:
   using: "composite"
   steps:
     - run: |
-        curl -X POST -H 'Content-type: application/json' --data '{ "blocks": [ { "type": "section", "text": { "type": "mrkdwn", "text": "🚨 ALERT 🚨\n\nThe main branch of *${{ github.repository }}* is failing.\n\nhttps://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}" }, "accessory": { "type": "image", "image_url": "${{ inputs.image-url || 'https://media.giphy.com/media/gn5Zllp8hD2KY/giphy.gif' }}", "alt_text": "house on fire" } }, { "type": "section", "text": { "type": "mrkdwn", "text": "```Additional Details 📓\n\n${{ inputs.details || 'No additional details were provided.' }} ```" } }]  }' ${{ inputs.slack-webhook-url }}
+        curl -X POST -H 'Content-type: application/json' --data '{ "blocks": [ { "type": "section", "text": { "type": "mrkdwn", "text": "${{ inputs.message || '🚨 ALERT 🚨\n\nThe main branch of *${{ github.repository }}* is failing.\n\nhttps://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}'}}" }, "accessory": { "type": "image", "image_url": "${{ inputs.image-url || 'https://media.giphy.com/media/gn5Zllp8hD2KY/giphy.gif' }}", "alt_text": "house on fire" } }, { "type": "section", "text": { "type": "mrkdwn", "text": "```Additional Details 📓\n\n${{ inputs.details || 'No additional details were provided.' }} ```" } }]  }' ${{ inputs.slack-webhook-url }}
       shell: bash

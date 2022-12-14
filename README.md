@@ -15,7 +15,7 @@ the main branch so that we can fix the issue right away.
 # This job will run only if the `needs` jobs have a failure.
 main-pain:
   name: Main Pain
-  runs-on: ubuntu-20.04
+  runs-on: ubuntu-latest
   needs: [test-frontend, test-backend] # These are the jobs about which we want to notify if there is a failure.
   if: always() && github.ref == 'refs/heads/main' && contains(join(needs.*.result, ','), 'failure')
   steps:

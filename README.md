@@ -23,7 +23,6 @@ main-pain:
       uses: Humi-HR/main-pain@main
       with:
         slack-webhook-url: ${{ secrets.MAIN_PAIN_WEBHOOK_URL }}
-        message: '🚨 ALERT 🚨\n\nThe main branch of *${{ github.repository }}* is failing.\n\nhttps://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}}}'
         details: 'Frontend Tests: ${{ needs.test-frontend.result }}\nBackend Tests: ${{ needs.test-backend.result }}'
         image-url: https://some-url/some-image.gif
 ```
@@ -32,6 +31,5 @@ main-pain:
 
 You must provide the `slack-webhook-url`.
 
-You can provide a message: a string of the main message to be sent.
 You can provide details: a string of additional details.
 You can provide image-url: a url to an image to be shown.

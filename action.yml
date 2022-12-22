@@ -4,6 +4,9 @@ inputs:
   slack-webhook-url:
     description: "The webhook url to which this action should send the web request"
     required: true
+  message:
+    description: "The main notification message to be sent"
+    required: false
   details:
     description: "A string of additional details to be shown below the main notification"
     required: false
